@@ -1,0 +1,7 @@
+%h1 Trains
+
+- for train in Array(@trains["root"]["station"]["etd"])
+  .train
+    %h3= train["destination"]
+    .estimate
+      = [train["estimate"]].flatten.collect { |e| e["minutes"] + " mins" }.join(", ")

@@ -1,0 +1,13 @@
+{
+	"ImportPath": "github.com/apcera/sample-apps/example-go-godeps",
+	"GoVersion": "go1.2",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/apcera/nats",
+			"Rev": "abf226a2020b94512fc74ef073de2c058c8d0229"
+		}
+	]
+}

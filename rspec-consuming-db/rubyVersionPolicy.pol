@@ -1,0 +1,5 @@
+on job::/ {
+  if (dependency equals runtime.ruby) {
+    package.default "package::/apcera/pkg/runtimes::2.1.0"
+  }
+}

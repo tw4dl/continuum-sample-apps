@@ -1,0 +1,39 @@
+# This configuration is used from within the rspec-stager.
+# Makes sure to pull db info from POSTGRES_URI for testing.
+<%
+def get_db_info
+  uri = URI.parse(ENV["POSTGRES_URI"]) rescue OpenStruct.new
+
+  # If we have a valid postgres url, parse it and check the db.
+  adapter = uri.scheme
+  adapter = "postgresql" if adapter == "postgres"
+
+  database = (uri.path || "").split("/").last
+
+  return adapter, database, uri
+end
+
+adapter, database, uri = get_db_info
+%>
+
+development:
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: <%= adapter %>
+  encoding: unicode
+  database: <%= database %>
+  pool: 5
+  host: <%= uri.host %>
+  port: <%= uri.port %>
+  username: <%= uri.user %>
+  password: <%= uri.password %>
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -e
+
+export TMPDIR=/tmp
+export RAILS_ENV=test
+
+# download the package to stage
+echo "Downloading to /app"
+curl $STAGER_URL/data > $TMPDIR/raw.tar.gz 2>/dev/null
+cd /app
+tar xzf $TMPDIR/raw.tar.gz --strip-components=1 app
+
+# Copy database.yml.test to be database.yml and backup original.
+cp config/database.yml config/database.yml.old
+cp config/database.yml.test config/database.yml
+
+# Apply schema to database, otherwise rspec will complain.
+bin/rake db:migrate
+
+# make sure we have rspec tests
+if [ ! -d spec ]; then
+  echo "No spec folder found. Not a valid project."
+  curl -X POST $STAGER_URL/failed
+  exit 1
+fi
+
+# run bundler to install test dependencies
+echo "-----> Running bundle install for test dependencies"
+bundle install --without development --path vendor/bundle \
+  --binstubs vendor/bundle/bin --deployment
+
+# run tests
+echo "-----> Running tests"
+set +e
+bundle exec rspec
+rspec_exit=$?
+set -e
+
+# check the exit code
+if [[ $rspec_exit != 0 ]]; then
+  echo "-----> Rspec failed!"
+  curl -X POST $STAGER_URL/failed >/dev/null 2>&1
+  exit $rspec_exit
+fi
+
+# If tests pass, copy back real database.yml.
+cp config/database.yml.old config/database.yml
+
+# success, mark stager done
+echo "-----> Rspec tests passed."
+curl -X POST $STAGER_URL/done >/dev/null 2>&1
