@@ -20,4 +20,5 @@ source ./setup-mysql-common.sh
 
 # --- main ---
 #
+cleanup
 echo -n "Cleaned up " `apc namespace`

@@ -14,9 +14,9 @@ BACKENDS=""
 for id in ${MASTER_ID} ${SLAVE_IDS} ; do
         BACKENDS="--proxy-backend-addresses=${IP_PREFIX}.${id}:3306 $BACKENDS"
 done
-OPTIONS="--admin-address=:4041 --proxy-address=:4040 --log-level=debug --plugins=proxy --plugins=admin --admin-username=root --admin-password=mysqlpw --admin-lua-script=/opt/mysql-proxy/lua/adminm.lua --proxy-lua-script=/opt/mysql-proxy/lua/usemaster.lua ${BACKENDS}"
+OPTIONS="--admin-address=:4041 --proxy-address=:4040 --log-level=debug --plugins=proxy --plugins=admin --admin-username=root --admin-password=mysqlpw --admin-lua-script=/usr/share/mysql-proxy/adminm.lua --proxy-lua-script=/usr/share/mysql-proxy/usemaster.lua ${BACKENDS}"
 
-/opt/mysql-proxy/bin/mysql-proxy ${OPTIONS} &
+/usr/bin/mysql-proxy ${OPTIONS} &
 PID=$!
 
 while true ; do
