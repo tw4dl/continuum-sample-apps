@@ -8,7 +8,6 @@
 
 cleanup()
 {
-  ./setup-mysql-client-reader.sh -c
   ./setup-mysql-client.sh -c
   ./setup-mysql-ha-service.sh -c
   ./setup-mysql-proxy.sh -c
