@@ -17,7 +17,7 @@ for id in ${SLAVE_IDS} ; do
         mysql --host=${IP_PREFIX}.${id} \
                 --user=root \
                 --password=mysqlpw \
-                -e "GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' IDENTIFIED BY 'repl' WITH GRANT OPTION;"
+                -e "GRANT REPLICATION SLAVE ON *.* TO 'repl' IDENTIFIED BY 'repl' WITH GRANT OPTION;"
 
         mysqlreplicate \
                 --master=root:mysqlpw@${IP_PREFIX}.${MASTER_ID}:3306 \
@@ -34,6 +34,7 @@ nohup mysqlfailover \
         --log=/tmp/failover.log \
         --pidfile=/tmp/failover.pid \
         --daemon=start \
+        --exec-fail-check=/mysql-proxy/run-server-check.sh \
         --verbose   </dev/null 2>&1 >/dev/null &
 
 sleep 1

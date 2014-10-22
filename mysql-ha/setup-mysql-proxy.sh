@@ -21,7 +21,7 @@ source ./setup-mysql-common.sh
 apc capsule create mysql-proxy-admin --image linux --allow-egress --batch
 
 # 2. Create a shar with all the necessary scripts
-shar run-mysql-failover.sh run-mysql-proxy.sh post-failover.sh usemaster.lua adminm.lua > /tmp/remote-proxy-shar.sh
+shar run-server-check.sh run-mysql-failover.sh run-mysql-proxy.sh post-failover.sh usemaster.lua adminm.lua > /tmp/remote-proxy-shar.sh
 
 # 3. Setup config files
 apc capsule connect mysql-proxy-admin </tmp/remote-proxy-shar.sh
@@ -40,8 +40,8 @@ echo "## initialize mysql instances"
 for id in ${MYSQL_IDS} ; do
 apc capsule connect mysql-proxy-admin <<EOF
 set -x
-/usr/bin/mysql --host=${IP_PREFIX}.${id} --port=3306 --user=root --password=mysqlpw -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'mysqlpw' WITH GRANT OPTION;"
-/usr/bin/mysql --host=${IP_PREFIX}.${id} --port=3306 --user=root --password=mysqlpw -e "GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' IDENTIFIED BY 'repl' WITH GRANT OPTION;"
+/usr/bin/mysql --host=${IP_PREFIX}.${id} --port=3306 --user=root --password=mysqlpw -e "GRANT ALL PRIVILEGES ON *.* TO 'root' IDENTIFIED BY 'mysqlpw' WITH GRANT OPTION;"
+/usr/bin/mysql --host=${IP_PREFIX}.${id} --port=3306 --user=root --password=mysqlpw -e "GRANT REPLICATION SLAVE ON *.* TO 'repl' IDENTIFIED BY 'repl' WITH GRANT OPTION;"
 /usr/bin/mysql --host=${IP_PREFIX}.${id} --port=3306 --user=root --password=mysqlpw -e "FLUSH PRIVILEGES;"
 EOF
 done
@@ -65,8 +65,10 @@ link_to_mysql proxy
 apc app start mysql-proxy
 
 # 12. Link the admin capsule to mysql-proxy
+apc capsule stop mysql-proxy-admin
 apc job link mysql-proxy-admin -t mysql-proxy --port 4040 --name MYSQL_PROXY_SQL --batch
 apc job link mysql-proxy-admin -t mysql-proxy --port 4041 --name MYSQL_PROXY_ADMIN --batch
+apc capsule start mysql-proxy-admin
 
 # 12. Run the failover script
 apc capsule connect mysql-proxy-admin <<'!'
