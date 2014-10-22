@@ -20,6 +20,14 @@ source ./setup-mysql-common.sh
 echo "## make mysql base snapshot"
 apc capsule create mysql-base --disk=1500 --image ubuntu-14.04 --allow-egress --batch
 apc capsule connect mysql-base << SSHEOF
+cat << EOF > /etc/apt/sources.list
+deb http://archive.ubuntu.com/ubuntu trusty main
+deb http://archive.ubuntu.com/ubuntu trusty universe
+deb http://security.ubuntu.com/ubuntu trusty-security main universe
+EOF
+cat >> /etc/resolv.conf <<EOF
+nameserver 8.8.8.8
+EOF
 apt-get update -y
 apt-get install -y mysql-client-5.6
 apt-get install -y mysql-server-5.6
@@ -67,8 +75,8 @@ echo "report-host=${IP_PREFIX}.${id}" >>/etc/my.cnf
 echo "report-port=3306" >>/etc/my.cnf
 echo "server-id=${id}" >>/etc/my.cnf
 service mysql start
-mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'mysqlpw' WITH GRANT OPTION;"
-mysql -e "GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' IDENTIFIED BY 'repl' WITH GRANT OPTION;"
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root' IDENTIFIED BY 'mysqlpw' WITH GRANT OPTION;"
+mysql -e "GRANT REPLICATION SLAVE ON *.* TO 'repl' IDENTIFIED BY 'repl' WITH GRANT OPTION;"
 mysql -e "FLUSH PRIVILEGES;"
 EOF
 done

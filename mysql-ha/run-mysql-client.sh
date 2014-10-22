@@ -16,6 +16,7 @@ mysql --user=${U} --password=${P} --host=$H --port=${O} \
 i=0
 while true ; do
   i=$((i+1))
+  mysql --user=${U} --password=${P} --host=$H --port=${O} -e "show variables like 'server_id' ;"
   mysql --user=${U} --password=${P} --host=$H --port=${O} \
     -e "insert into checkrep (name, time) values (\"check-${i}\", SYSDATE()) ;"
   sleep 5
