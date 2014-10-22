@@ -34,11 +34,10 @@ The next script will register the MySQL server and proxy jobs as a MySQL provide
 
 ## Create Clients
 
-The next two scripts create a pair of clients to use with the HA service.  The clients are capsules using mysql CLI as client applications.
+The script creates a pair of clients to use with the HA service.  The clients are capsules using mysql CLI as client applications.
 
 ```
 ./setup-mysql-client.sh
-./setup-mysql-client-reader.sh
 ```
 
 ## Run the Client Tests
