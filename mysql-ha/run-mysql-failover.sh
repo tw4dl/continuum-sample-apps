@@ -30,7 +30,7 @@ done
 nohup mysqlfailover \
         --master=root:mysqlpw@${IP_PREFIX}.${MASTER_ID}:3306 \
         --discover-slaves-login=root:mysqlpw \
-        --exec-post-failover=/opt/mysql-utilities/bin/post-failover.sh \
+        --exec-post-failover=/mysql-proxy/post-failover.sh \
         --log=/tmp/failover.log \
         --pidfile=/tmp/failover.pid \
         --daemon=start \

@@ -8,7 +8,7 @@ cleanup()
   rm -f ./configure-proxy-shar.sh
   apc capsule delete mysql-proxy-admin --batch || true
   apc app delete mysql-proxy --batch || true
-  apc package delete mysql-proxy-snapshot --batch || true
+  apc package delete mysql-snapshot --batch || true
 }
 
 # process common options
@@ -28,7 +28,7 @@ apc capsule connect mysql-proxy-admin </tmp/remote-proxy-shar.sh
 apc capsule connect mysql-proxy-admin <./remote-install-proxy.sh
 
 # 4. Create snapshot and link it to our capsule
-apc capsule snapshot mysql-proxy-admin --name mysql-proxy-snapshot --link --batch
+apc capsule snapshot mysql-proxy-admin --name mysql-snapshot --link --batch
 
 # 5. Link to the servers
 apc capsule stop mysql-proxy-admin
@@ -47,11 +47,11 @@ EOF
 done
 
 # 7. Add env to package
-apc package update mysql-proxy-snapshot --batch \
+apc package update mysql-snapshot --batch \
         --env-set "MYSQL_IDS=\"${MYSQL_IDS}\" IP_PREFIX=${IP_PREFIX}"
 
 # 8. Create an app from the package
-apc app from package mysql-proxy --disable-routes --package mysql-proxy-snapshot --start-cmd '/bin/sh -c /opt/mysql-proxy/bin/run-mysql-proxy.sh' --batch
+apc app from package mysql-proxy --disable-routes --package mysql-snapshot --start-cmd '/bin/sh -c /mysql-proxy/run-mysql-proxy.sh' --batch
 
 # 9. Add a port to the capsule
 apc app update mysql-proxy --port-add 4041 --batch
@@ -71,5 +71,5 @@ apc job link mysql-proxy-admin -t mysql-proxy --port 4041 --name MYSQL_PROXY_ADM
 # 12. Run the failover script
 apc capsule connect mysql-proxy-admin <<'!'
 set -x
-/opt/mysql-utilities/bin/run-mysql-failover.sh
+/mysql-proxy/run-mysql-failover.sh
 !

@@ -35,5 +35,6 @@ echo -n "Setting up demo on " `apc namespace`
 ./setup-master-slave-capsule.sh
 ./setup-mysql-proxy.sh
 ./setup-mysql-ha-service.sh
+# sleep here for a short time to wait for the service to be ready
+sleep 2
 ./setup-mysql-client.sh
-./setup-mysql-client-reader.sh
