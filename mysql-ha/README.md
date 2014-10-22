@@ -8,6 +8,10 @@ The MySQL service gateway must be setup with policy rules allowing the user to c
 The Continuum CLI 'apc' must be installed on your system.
 The scripts below need to be run on a unix system, or a system that emulates the bourne shell.
 
+### Shortcut:
+
+The `setup.sh` script executes the following steps in order. It may be easier to follow along if you execute them each by hand.
+
 ## Create a pair of MySQL servers
 
 This script will start two capsules, install mysql 5.6, and prepare the two capsules for performing a master-slave replication:
@@ -75,9 +79,15 @@ EOF
 Finally we simply kill a service or a job.
 
 # Gentle death
+
+```
 apc capsule connect mysql-1 <<EOF
 service mysql stop
 EOF
+```
 
 # harsher death
+
+```
 apc job stop mysql-1
+```
