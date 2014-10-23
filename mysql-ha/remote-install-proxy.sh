@@ -43,5 +43,5 @@ dpkg -i mysql-utilities_1.5.2-1ubuntu12.04_all.deb
 
 cat << EOF > /etc/my.cnf
 [client]
-client-timeout=1
+connect-timeout=1
 EOF
