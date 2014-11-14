@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 #
 # Docker Proxy setup
 #
@@ -19,6 +19,10 @@ source ./setup-mysql-common.sh
 # 1. Create a capsule to setup the snapshot.  The mysql-proxy-admin serves as our administration capsule.
 # From there we can connect to the proxy and the servers.
 apc capsule create mysql-proxy-admin --image linux --allow-egress --batch
+apc capsule connect mysql-proxy-admin << SSHEOF
+apt-get update -y
+apt-get install sharutils -y
+SSHEOF
 
 # 2. Create a shar with all the necessary scripts
 shar run-server-check.sh run-mysql-failover.sh run-mysql-proxy.sh post-failover.sh usemaster.lua adminm.lua > /tmp/remote-proxy-shar.sh
