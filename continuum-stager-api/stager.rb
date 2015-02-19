@@ -10,6 +10,8 @@ Bundler.setup
 # Bring in continuum-stager-api
 require "continuum-stager-api"
 
+# Make sure stdout is sync'd.
+STDOUT.sync = true
 stager = Apcera::Stager.new
 
 # Add the ruby dependency we need to stage our app. If it was added
