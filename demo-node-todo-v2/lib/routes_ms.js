@@ -17,7 +17,17 @@ if (typeof msUrl !== "undefined") {
   }
 
   exports.updateConnStatus = function(req, res) {
-    res.send(pgClient.connectionParameters);
+    var msConnString = 'mysql://' + req.params.user + ':' + req.password + '@' +
+      req.params.host + ':' + '3306' + '/tododb';
+    var newMsConnection = mysql.createConnection(msConnString);
+    newMsConnection.connect(function(err) {
+      if (err) {
+        res.send({ status: false, error: 'Connection Denied'});
+      } else {
+        msConnection = newMsConnection;
+        res.send({ status: true, description: 'Connection Successful'});
+      }
+    });
   }
 
   exports.getConnStatus = function(req, res) {

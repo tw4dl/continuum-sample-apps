@@ -402,6 +402,7 @@ todomvc.controller('BindingCtrl', function($scope, $log, $http){
     $http.get("/" + db + "_conn_info").then(function(values, headers){
       $log.debug("in binding get callback: " + values.host);
       $scope.ConnInfo = values.data;
+      $scope.ConnInfo.password = $scope.ConnInfo.password || '1234'
       $scope.ShowIt = true;
       $scope.ShowItRight = true;
     });
@@ -417,17 +418,21 @@ todomvc.controller('BindingCtrl', function($scope, $log, $http){
       $scope.ConnInfo.ShowError = false;
       // invoke the /conn_info/:user/:passwd function, expecting an error
       var status = $http.get("/" + db + "_conn_status/" + $scope.ConnInfo.NewUser +
-        "/password").then(function(values, headers){
-        $log.debug("in conn_info get callback for conninfo: " + values);
-        $log.debug("in conn_info get callback for conninfo: " + values.new_conn_string);
-        $scope.ConnInfo.SuccessMsg = values.description;
-        $scope.ConnInfo.ShowSuccess = true;
-        $scope.ConnInfo.ShowError = false;
-      }, function(values, headers){
-        $log.debug("in error handler for conninfo: " + values);
-        $scope.ConnInfo.ErrorMsg = values.data.error || "Connection failed" ;
-        $scope.ConnInfo.ShowSuccess = false;
-        $scope.ConnInfo.ShowError = true;
+        "/" + $scope.ConnInfo.NewPassword + '/' + $scope.ConnInfo.host)
+        .then(function(resp, headers){
+          var values = resp.data;
+          if (values.status) {
+            $log.debug("in conn_info get callback for conninfo: " + values);
+            $log.debug("in conn_info get callback for conninfo: " + values.new_conn_string);
+            $scope.ConnInfo.SuccessMsg = values.description;
+            $scope.ConnInfo.ShowSuccess = true;
+            $scope.ConnInfo.ShowError = false;
+          } else {
+            $log.debug("in error handler for conninfo: " + values);
+            $scope.ConnInfo.ErrorMsg = values.error || "Connection failed" ;
+            $scope.ConnInfo.ShowSuccess = false;
+            $scope.ConnInfo.ShowError = true;
+          }
       });
     }
 

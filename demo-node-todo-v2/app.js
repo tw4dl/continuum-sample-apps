@@ -65,7 +65,7 @@ if (typeof routes_pg.createTables !== "undefined") {
   app.post('/addPGTask', routes_pg.addTask);
   app.get('/deletePGRows', routes_pg.deleteRows);
   app.get('/pg_conn_info', routes_pg.getConnInfo);
-  app.get('/pg_conn_status/:user/:passwd', routes_pg.updateConnStatus);
+  app.get('/pg_conn_status/:user/:passwd/:host', routes_pg.updateConnStatus);
   app.get('/pg_conn_status', routes_pg.getConnStatus);
 }
 
@@ -78,6 +78,6 @@ if (typeof routes_ms.createTables !== "undefined") {
   app.post('/addMSTask', routes_ms.addTask);
   app.get('/deleteMSRows', routes_ms.deleteRows);
   app.get('/ms_conn_info', routes_ms.getConnInfo);
-  app.get('/ms_conn_status/:user/:passwd', routes_ms.updateConnStatus);
+  app.get('/ms_conn_status/:user/:passwd/:host', routes_ms.updateConnStatus);
   app.get('/ms_conn_status', routes_ms.getConnStatus);
 }

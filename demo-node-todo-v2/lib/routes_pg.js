@@ -20,7 +20,18 @@ if (typeof pgConString !== "undefined") {
   }
 
   exports.updateConnStatus = function(req, res) {
-    res.send(pgClient.connectionParameters);
+    var pgConnString = 'postgres://' + req.params.user + ':' + req.password + '@' +
+      req.params.host + ':' + '5432' + '/tododb';
+      console.log(pgConnString)
+    var newPgClient = new pg.Client(pgConnString);
+    newPgClient.connect(function(err) {
+      if (err) {
+        res.send({ status: false, error: 'Connection Denied'});
+      } else {
+        pgClient = newPgClient;
+        res.send({ status: true, description: 'Connection Successful'});
+      }
+    });
   }
 
   exports.getConnStatus = function(req, res) {
