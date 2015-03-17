@@ -1,0 +1,107 @@
+.hidden {
+  display: none;
+}
+
+#logo-header {
+  position: absolute;
+  top: -120px;
+  height: 100px;
+  width: 300px;
+}
+
+#logo-container {
+  position: relative;
+  height: 100%;
+}
+
+#logo-container #logo {
+  background: url('logo.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.version {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  font-size: 20px;
+}
+/* SQL Commands */
+#databaseCommands {
+  color: black;
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+
+#databaseCommands select {
+  font-size: 2em;
+}
+
+#databaseCommands a:hover {
+  font-weight: bold;
+}
+
+#databaseCommands .action {
+	color: white;
+	font-weight: bold;
+	text-shadow: none;
+	background-color: #aaaaaa;
+	padding: 3px 8px;
+	border: 1px solid white;
+	border-radius: 6px;
+	text-decoration: none;
+}
+
+#databaseCommands .action:active {
+	background-color: #777777;
+}
+
+/* Create Tables when no db tables */
+#noTables {
+  color: red;
+  font-size: small;
+}
+
+#noTables a:hover {
+  font-weight: bold;
+}
+
+
+#SQLOutput {
+  font-size: medium;
+}
+
+#status {
+  font-weight: bold;
+  font-size: 1.3em;
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #4d4d4d;
+  text-align: center;
+}
+
+#status.warning {
+  background-color: #fff97a;
+  opacity: 0.7;
+}
+
+#status.error {
+  color: #fff;
+  background-color: #bc000c;
+  opacity: 0.7;
+}
+.big-label {
+  font-size: 18px;
+  position: relative;
+  top: -5px;
+}
+
+.updateBtn {
+  position: relative;
+  margin-bottom: 12px;
+}
