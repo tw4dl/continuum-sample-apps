@@ -17,8 +17,8 @@ if (typeof msUrl !== "undefined") {
   }
 
   exports.updateConnStatus = function(req, res) {
-    var msConnString = 'mysql://' + req.params.user + ':' + req.password + '@' +
-      req.params.host + ':' + '3306' + '/tododb';
+    var msConnString = 'mysql://' + req.params.user + ':' + req.params.passwd + '@' +
+      req.params.host + ':' + '20000/' + msConnection.config.database;
     var newMsConnection = mysql.createConnection(msConnString);
     newMsConnection.connect(function(err) {
       if (err) {

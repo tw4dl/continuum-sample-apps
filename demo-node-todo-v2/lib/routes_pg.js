@@ -20,7 +20,7 @@ if (typeof pgConString !== "undefined") {
   }
 
   exports.updateConnStatus = function(req, res) {
-    var pgConnString = 'postgres://' + req.params.user + ':' + req.password + '@' +
+    var pgConnString = 'postgres://' + req.params.user + ':' + req.params.passwd + '@' +
       req.params.host + ':' + '5432' + '/tododb';
       console.log(pgConnString)
     var newPgClient = new pg.Client(pgConnString);
