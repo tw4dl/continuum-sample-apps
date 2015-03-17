@@ -5,6 +5,7 @@
 #logo-header {
   position: absolute;
   top: -120px;
+  left: 120px;
   height: 100px;
   width: 300px;
 }
@@ -25,11 +26,18 @@
   right: 0;
 }
 
+.exit {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+}
+
 .version {
   position: fixed;
   right: 30px;
   bottom: 30px;
   font-size: 20px;
+  color: red;
 }
 /* SQL Commands */
 #databaseCommands {

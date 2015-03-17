@@ -25,6 +25,11 @@ todomvc.controller( 'TodoCtrl', function TodoCtrl(
     }
   });
 
+  $scope.triggerExit = function() {
+    $http.get('/quit');
+    location.reload()
+  }
+
   var errorMessage = function(data, status, headers, config) {
     // Skip this function once if both DBs just failed
     if ($scope.pgFailed && $scope.msFailed) {
