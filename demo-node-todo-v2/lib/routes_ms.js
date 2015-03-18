@@ -13,12 +13,14 @@ if (typeof msUrl !== "undefined") {
   });
 
   exports.getConnInfo = function(req, res) {
+    console.log('- msql connection config:', msConnection.config);
     res.send(msConnection.config);
   }
 
   exports.updateConnStatus = function(req, res) {
     var msConnString = 'mysql://' + req.params.user + ':' + req.params.passwd + '@' +
-      req.params.host + ':' + '20000/' + msConnection.config.database;
+      req.params.host + ':' + msConnection.config.port + '/' + msConnection.config.database;
+
     var newMsConnection = mysql.createConnection(msConnString);
     newMsConnection.connect(function(err) {
       if (err) {
