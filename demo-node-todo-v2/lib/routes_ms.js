@@ -22,6 +22,8 @@ if (typeof msUrl !== "undefined") {
     var newMsConnection = mysql.createConnection(msConnString);
     newMsConnection.connect(function(err) {
       if (err) {
+        console.log('- mysql reconnect error: ');
+        console.log(err);
         res.send({ status: false, error: 'Connection Denied'});
       } else {
         msConnection = newMsConnection;
