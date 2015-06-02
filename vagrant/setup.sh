@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ ! -d /home/vagrant/continuum-sample-apps/vagrant/continuum-setup.conf ]; then
-	echo "Please copy continuum-setup.conf.template to continuum-setup.conf and update the value of first name element."
+if [ ! -f /home/vagrant/continuum-sample-apps/vagrant/continuum-setup.conf ]; then
+	echo "Please copy continuum-setup.conf.template to continuum-setup.conf and update the value of cluster domain prefix name."
 	exit 1
 fi
 # update IP address to use eth1's IP address
