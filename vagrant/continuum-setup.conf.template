@@ -1,0 +1,17 @@
+{
+
+	"name":"CHANGE-ME-DOMAIN-NAME-PREFIX",
+	"email":"",
+	"ip":"AUTO-UPDATED-WITH-BRIDGE-IP",
+	"token":"",
+	"Admin":
+	{ 
+		"name":"admin", 
+		"password":"admin" 
+	},
+	"Unprivileged":
+	{ 
+		"name":"developer", 
+		"password":"developer" 
+	}
+}
