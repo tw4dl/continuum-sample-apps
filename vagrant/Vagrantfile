@@ -2,12 +2,12 @@ Vagrant.configure("2") do |config|
 	config.vm.box = "apcera/continuum_trial"
 	config.vm.network :public_network
 	config.vm.box_download_checksum_type = "sha256"
-	
-#	config.vm.box_download_checksum = "319e3ace1704c5bd8a00c4884bbac073d59c56d5cd021000c27c33ef2cb2ba71"
-#	config.vm.box_url = "https://d1g23m5c3hjtbv.cloudfront.net/continuum_trial_vagrant_vmware.box"
-
+	# virtualbox
 	config.vm.box_download_checksum = "246d5c6a27bd5a6ab126e8dc23dc6d084c97c2b7de81c363feacc5e52493d589"
 	config.vm.box_url = "https://d1g23m5c3hjtbv.cloudfront.net/continuum_trial_vagrant_virtualbox.box"
+	# vmware box
+	# config.vm.box_download_checksum = "319e3ace1704c5bd8a00c4884bbac073d59c56d5cd021000c27c33ef2cb2ba71"
+	# config.vm.box_url = "https://d1g23m5c3hjtbv.cloudfront.net/continuum_trial_vagrant_vmware.box"
 
 	config.vm.synced_folder "..", "/home/vagrant/continuum-sample-apps"
 	config.vm.provision "shell", inline: "sudo  /home/vagrant/continuum-sample-apps/vagrant/setup.sh"
